@@ -15,13 +15,35 @@ def median_absolute_deviation(data):
     mad_value = np.median(np.abs(data - median_value))
     return mad_value
 
-def trimmed_mean(data, proportiontocut=0.1):
+
+def trimmed_mean(data, proportiontocut=0.1, tail='both'):
     """
     [절사평균 계산]
     - 일정 비율(proportiontocut)로  데이터의 양 끝을 제외하고 남은 값들의 평균을 계산
+    - 한쪽만 절사할 경우, 'tail' parameter을 사용하여 left 혹은 right 한쪽의 데이터만 제외할 수 있도록 설정 
     """
-    trimmed_mean_value = trim_mean(data, proportiontocut=proportiontocut)
-    return trimmed_mean_value
+    data = np.asarray(data)
+    
+    if data.size == 0:
+        return np.nan
+    
+    nobs = len(data)
+
+    lowercut = int(proportiontocut * nobs)
+    uppercut = nobs - lowercut
+    
+    atmp = np.partition(data, (lowercut, uppercut - 1))
+
+    if tail == 'left':
+        sl = slice(lowercut + 1, None)
+    elif tail == 'right':
+        sl = slice(None, uppercut)
+    else: 
+        sl = slice(lowercut, uppercut)
+    
+    scipy_use_trimmed = trim_mean(data, proportiontocut=proportiontocut) 
+    return np.mean(atmp[sl]), scipy_use_trimmed
+
 
 def log_mean(data):
     """
@@ -44,6 +66,9 @@ def log_mean(data):
     log_mean_value = np.mean(log_data)
     return log_mean_value
 
+
+
+
 # Load the 'tips' dataset in Seaborn
 tips_data = sns.load_dataset('tips')
 
@@ -60,7 +85,7 @@ tips_data = tips_data['total_bill']
 mean_value = np.mean(tips_data)
 median_value = np.median(tips_data)
 mad_value = median_absolute_deviation(tips_data)
-trimmed_mean_value = trimmed_mean(tips_data)
+trimmed_mean_value = trimmed_mean(tips_data, tail='right')
 log_mean_value = log_mean(tips_data)
 
 # Results ------------
