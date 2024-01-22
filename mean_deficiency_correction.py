@@ -35,14 +35,12 @@ def trimmed_mean(data, proportiontocut=0.1, tail='both'):
     atmp = np.partition(data, (lowercut, uppercut - 1))
 
     if tail == 'left':
-        sl = slice(lowercut + 1, None)
+        return np.mean(atmp[lowercut + 1:])
     elif tail == 'right':
-        sl = slice(None, uppercut)
+        return np.mean(atmp[:uppercut])
     else: 
-        sl = slice(lowercut, uppercut)
+        return np.mean(atmp[lowercut+1:uppercut])
     
-    scipy_use_trimmed = trim_mean(data, proportiontocut=proportiontocut) 
-    return np.mean(atmp[sl]), scipy_use_trimmed
 
 
 def log_mean(data):
