@@ -93,7 +93,7 @@ def trimmed_mean(data, proportiontocut=0.1, tail='both'):
 
 def log_mean(data):
     """
-    Calculate Logarithmic Mean.
+    Calculate Logarithmic Mean and transform it back to the original scale.
 
     Parameters
     ----------
@@ -102,8 +102,8 @@ def log_mean(data):
 
     Returns
     -------
-    log_mean_value : float
-        Logarithmic Mean.
+    Tuple: float, float
+        Logarithmic Mean and Original Scale Mean (exponential transformation of log_mean_value)
 
     Notes
     -----
@@ -118,13 +118,16 @@ def log_mean(data):
     Example
     -------
     >>> data = [1, 2, 3, 4, 5, 1000]
-    >>> log_mean_value = log_mean(data)
-    >>> print(f"Log Mean: {log_mean_value}")
+    >>> log_mean_result = log_mean(data)
+    >>> print(f"Log Mean: {log_mean_result[0]}")
+    >>> print(f"Original Scale Mean: {log_mean_result[1]}")
     Log Mean: 2.2480009985542204
+    Original Scale Mean: 9.46878878260777
     """
     log_data = np.log1p(data)
     log_mean_value = np.mean(log_data)
-    return log_mean_value
+    original_scale_value = np.exp(log_mean_value)
+    return log_mean_value, original_scale_value
 
 
 
@@ -146,12 +149,13 @@ mean_value = np.mean(tips_data)
 median_value = np.median(tips_data)
 mad_value = median_absolute_deviation(tips_data)
 trimmed_mean_value = trimmed_mean(tips_data, tail='right')
-log_mean_value = log_mean(tips_data)
+log_mean_result = log_mean(tips_data)
 
 # Results ------------
 print(f"Original Mean: {mean_value}")
 print(f"Median: {median_value}")
 print(f"MAD: {mad_value}")
 print(f"Trimmed Mean: {trimmed_mean_value}")
-print(f"Log Mean: {log_mean_value}")
+print(f"Log Mean: {log_mean_result[0]}")
+print(f"Original Scale Mean: {log_mean_result[1]}")
 
