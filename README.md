@@ -53,3 +53,14 @@ Consider the characteristics of your data and the specific goals of your analysi
 
 ## Contributions✨
 This repository welcomes contributions and suggestions! Feel free to open issues or pull requests to improve the code or documentation 🤗
+
+
+## References
+
+* [Detect and deal with outliers](https://medium.com/@mert55yyyy/detect-and-deal-with-outliers-69b1e38ea1de)
+* [Skewness, Kurtosis, and Normalization](https://medium.com/@p/27479be7a55b)
+    * Skewness and kurtosis
+* [MAD](https://medium.com/@n.j.marey/outlier-detection-median-absolute-deviation-in-sas-971e07f95b67)
+* ['trim_mean' function of SciPy](https://github.com/scipy/scipy/blob/v1.12.0/scipy/stats/_stats_py.py#L3849-L3916)
+* ['np.partition' function](https://numpy.org/doc/stable/reference/generated/numpy.partition.html)
+* [Logarithm and log function](https://suppppppp.github.io/posts/Why-Series-MDM-1/)
